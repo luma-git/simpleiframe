@@ -9,7 +9,7 @@ const message = ref("Simpleiframe évolue et passe en v0.2 sur VueJS. L'outil va
 <template>
     <NewsPopUp :message="message" />
     <header>
-        <img src="3d-rocket.png" />
+        <img src="@/assets/3d-rocket.png" />
         <h1>simpleiframe <span class="badge bg-primary">Bêta</span></h1>
         <p class="lead">Bienvenue 👋 Remplissez le formulaire et générez un code prêt à intégrer,
             responsive et conforme au RPGD grâce à tarteaucitron.io</p>
