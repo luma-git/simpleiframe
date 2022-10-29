@@ -15,17 +15,17 @@
         <BaseCheckbox v-model="serviceToConvert.centered" label="Centrer le contenu" />
 
         <div class="mt-4">
-            <button type="submit" class="btn btn-dark">Générer le code 🚀</button>
+            <button type="submit" class="btn btn-primary">Générer le code</button>
 
-            <button type="button" @click.prevent="clearForm()" class="btn btn-dark m-2">Annuler</button>
+            <button type="button" @click.prevent="clearForm()" class="btn btn-outline-primary m-2">Annuler</button>
         </div>
 
-        <p v-if="errors.length" class="mt-3">
-            <strong>Nous avons encore besoin de quelques informations pour préparer votre code :</strong>
-        <ul>
-            <li v-for="error in errors">🚨 {{ error }}</li>
-        </ul>
-        </p>
+        <div v-if="errors.length" class="callout">
+            <span><strong>Nous avons encore besoin de quelques informations pour préparer votre code :</strong></span>
+            <ul>
+                <li v-for="error in errors">🚨 {{ error }}</li>
+            </ul>
+        </div>
 
         <GeneratedCode v-if="this.generatedCode" :generatedCode="generatedCode" />
 
@@ -36,7 +36,7 @@
 import BaseSelect from '@/components/FormComponents/BaseSelect.vue'
 import BaseInput from '@/components/FormComponents/BaseInput.vue'
 import BaseCheckbox from '@/components/FormComponents/BaseCheckbox.vue'
-import GeneratedCode from './GeneratedCode.vue'
+import GeneratedCode from '@/components/GeneratedCode.vue'
 import ServiceInfos from '@/components/ServiceInfos.vue'
 export default {
     components: {
@@ -55,7 +55,7 @@ export default {
                 'creacast'
             ],
             videoSizes: [
-                360, 720, 1200
+                '360px', '720px', '1200px'
             ],
             parcers: {
                 youtube: 'https://youtu.be/',
@@ -107,10 +107,10 @@ export default {
             }
 
             if (this.serviceToConvert.service === 'youtube' || this.serviceToConvert.service === 'dailymotion' || this.serviceToConvert.service === 'vimeo') {
-                this.generatedCode = '<style>.iframe-container {' + (this.serviceToConvert.centered ? 'margin: auto; ' : '') + 'max-width: ' + this.serviceToConvert.size + 'px; width: 100%;} .iframe-container__wrapper {position: relative; overflow: hidden; width: 100%; padding-top: 56.25%;} .responsive-iframe {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}</style><div class="iframe-container"><div class="iframe-container__wrapper"><div class="' + this.serviceToConvert.service + '_player responsive-iframe" videoID="' + this.serviceToConvert.id + '" width="100%" height="100%" title="' + this.serviceToConvert.title + ' (Vidéo ' + this.serviceToConvert.service + ')"></div></div></div>'
+                this.generatedCode = '<style>.iframe-container {' + (this.serviceToConvert.centered ? 'margin: auto; ' : '') + 'max-width: ' + this.serviceToConvert.size + '; width: 100%;} .iframe-container__wrapper {position: relative; overflow: hidden; width: 100%; padding-top: 56.25%;} .responsive-iframe {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}</style><div class="iframe-container"><div class="iframe-container__wrapper"><div class="' + this.serviceToConvert.service + '_player responsive-iframe" videoID="' + this.serviceToConvert.id + '" width="100%" height="100%" title="' + this.serviceToConvert.title + ' (Vidéo ' + this.serviceToConvert.service + ')"></div></div></div>'
             }
             else if (this.serviceToConvert.service === 'creacast') {
-                this.generatedCode = '<style>.iframe-container {' + (this.serviceToConvert.centered ? 'margin: auto; ' : '') + 'max-width: ' + this.serviceToConvert.size + 'px; width: 100%;} .iframe-container__wrapper {position: relative; overflow: hidden; width: 100%; padding-top: 56.25%;} .responsive-iframe {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}</style><div class="iframe-container"><div class="iframe-container__wrapper"><iframe class="responsive-iframe" src="' + this.serviceToConvert.url + '" width="100%" height="100%" title="' + this.serviceToConvert.title + ' (player vidéo)" allowfullscreen frameborder="0"></iframe></div></div>'
+                this.generatedCode = '<style>.iframe-container {' + (this.serviceToConvert.centered ? 'margin: auto; ' : '') + 'max-width: ' + this.serviceToConvert.size + '; width: 100%;} .iframe-container__wrapper {position: relative; overflow: hidden; width: 100%; padding-top: 56.25%;} .responsive-iframe {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}</style><div class="iframe-container"><div class="iframe-container__wrapper"><iframe class="responsive-iframe" src="' + this.serviceToConvert.url + '" width="100%" height="100%" title="' + this.serviceToConvert.title + ' (player vidéo)" allowfullscreen frameborder="0"></iframe></div></div>'
             }
         },
         clearForm() {
@@ -133,5 +133,11 @@ export default {
 li {
     list-style: none;
     margin-left: -35px;
+}
+
+.callout {
+    margin-top: 20px;
+    border-left: #70e2ff 4px solid;
+    padding: 3px 10px 1px 10px;
 }
 </style>
